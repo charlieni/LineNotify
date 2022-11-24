@@ -56,6 +56,7 @@ def crawl(driver):
         }
         driver.close()
         driver.switch_to.window(baseWindow)
+        ####判斷字詞發送notify
         for word in underlinelist:
             if word in key:
                 message=''

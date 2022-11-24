@@ -34,9 +34,9 @@ def job():
                     elif count == 4:
                         announcement+=key[i]
                 message=underline+"\n"+cmpnynum+cmpnyname+"-重大消息"+"\n"+announcement
-                image = open('./screen.png', 'rb')
+            #    image = open('./screen.png', 'rb')
 
-                imageFile = {'imageFile' : b(data[key]['png'])}   # 設定圖片資訊
+                imageFile = {'imageFile' : (data[key]['png'])}   # 設定圖片資訊
                 data = {
                 'message':message ,     # 設定 LINE Notify message ( 不可少 )
                 }
