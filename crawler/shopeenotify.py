@@ -1,7 +1,7 @@
 from crawler import crawl
 from webDriver import ChromeDriver
 import requests
-
+import  io 
 
 url = 'https://notify-api.line.me/api/notify'
 token = '4lRN30G7BsMNpV52kAYGj88xhpvdCx5Pm4r1fdgOzAK'   ###授權碼
@@ -35,8 +35,9 @@ def job():
                         announcement+=key[i]
                 message=underline+"\n"+cmpnynum+cmpnyname+"-重大消息"+"\n"+announcement
             #    image = open('./screen.png', 'rb')
-
-                imageFile = {'imageFile' : (data[key]['png'])}   # 設定圖片資訊
+                ii=io.BytesIO(data[key]['png'])
+                image = io.BufferedReader(ii)
+                imageFile = {'imageFile' : image}   # 設定圖片資訊
                 data = {
                 'message':message ,     # 設定 LINE Notify message ( 不可少 )
                 }
