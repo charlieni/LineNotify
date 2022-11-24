@@ -3,9 +3,8 @@ from webDriver import ChromeDriver
 import requests
 
 
-
 url = 'https://notify-api.line.me/api/notify'
-token = 'nL6CrLd4trO1PHNv7u8rrcxyQFl9OP2G5rTEdBNX90Z'   ###授權碼
+token = '4lRN30G7BsMNpV52kAYGj88xhpvdCx5Pm4r1fdgOzAK'   ###授權碼
 headers = {
     'Authorization': 'Bearer ' + token    # 設定 LINE Notify 權杖
 }
@@ -35,8 +34,9 @@ def job():
                     elif count == 4:
                         announcement+=key[i]
                 message=underline+"\n"+cmpnynum+cmpnyname+"-重大消息"+"\n"+announcement
-                image = open('./screen.png', 'rb')    # 以二進位方式開啟圖片
-                imageFile = {'imageFile' :image}   # 設定圖片資訊
+                image = open('./screen.png', 'rb')
+
+                imageFile = {'imageFile' : b(data[key]['png'])}   # 設定圖片資訊
                 data = {
                 'message':message ,     # 設定 LINE Notify message ( 不可少 )
                 }
