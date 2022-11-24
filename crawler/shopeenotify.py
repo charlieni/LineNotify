@@ -4,7 +4,7 @@ import requests
 import  io 
 
 url = 'https://notify-api.line.me/api/notify'
-token = '4lRN30G7BsMNpV52kAYGj88xhpvdCx5Pm4r1fdgOzAK'   ###授權碼
+token = 'TR7hKxoPx6QmBWawSxMmkwqE41oHROYWQvEfclEwwRq'   ###授權碼
 headers = {
     'Authorization': 'Bearer ' + token    # 設定 LINE Notify 權杖
 }
@@ -35,8 +35,8 @@ def job():
                         announcement+=key[i]
                 message=underline+"\n"+cmpnynum+cmpnyname+"-重大消息"+"\n"+announcement
             #    image = open('./screen.png', 'rb')
-                ii=io.BytesIO(data[key]['png'])
-                image = io.BufferedReader(ii)
+                # ii=io.BytesIO(data[key]['png'])
+                image = data[key]['png']
                 imageFile = {'imageFile' : image}   # 設定圖片資訊
                 data = {
                 'message':message ,     # 設定 LINE Notify message ( 不可少 )

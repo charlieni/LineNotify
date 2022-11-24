@@ -54,11 +54,11 @@ def crawl(driver):
         except:
             pass
         # save newData
-        png=driver.get_screenshot_as_png()
+        driver.get_screenshot_as_file('./screen.png')
         newData[key] = {
-            'png': png,
+            'png': open('./screen.png', 'rb'),
             'source': driver.page_source,
-            'pngio': BufferedReader(BytesIO(png)) # try this
+           # 'pngio': BufferedReader(BytesIO(png)) # try this
         }
         driver.close()
         driver.switch_to.window(baseWindow)
