@@ -2,6 +2,7 @@ from selenium.webdriver.common.by import By
 from datetime import datetime
 from webDriver import ChromeDriver
 import time
+from io import BytesIO, BufferedReader
 
 global DIC
 DIC = {}
@@ -46,11 +47,18 @@ def crawl(driver):
         driver.execute_script(script)
         driver.switch_to.window(driver.window_handles[-1])
         time.sleep(1)
+        # set window to fit table
+        try:
+            bottom = driver.find_element(By.XPATH, '/html/body/table[3]/tbody/tr/td/b')
+            driver.set_window_size(driver.get_window_size[0], bottom.location)
+        except:
+            pass
         # save newData
         png=driver.get_screenshot_as_png()
         newData[key] = {
             'png': png,
-            'source': driver.page_source
+            'source': driver.page_source,
+            'pngio': BufferedReader(BytesIO(png)) # try this
         }
         driver.close()
         driver.switch_to.window(baseWindow)
@@ -85,5 +93,6 @@ def crawl(driver):
         
 
 if __name__ == '__main__':
-    
+    driver = ChromeDriver().driver
+    crawl(driver)
     pass
