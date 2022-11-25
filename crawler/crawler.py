@@ -2,11 +2,16 @@ from selenium.webdriver.common.by import By
 from datetime import datetime
 from webDriver import ChromeDriver
 import time
-from io import BytesIO, BufferedReader
+import requests
 
 global DIC
 DIC = {}
-
+urlline = 'https://notify-api.line.me/api/notify'
+token = 't7HJDWKQr0zHeOYM6AJizVgTtQMCfjPnQpDlNVMOLH0'   ###授權碼
+headers = {
+    'Authorization': 'Bearer ' + token    # 設定 LINE Notify 權杖
+}
+underlinelist={"減資","庫藏股","轉換","澄清","本公司召開","公司債","增資"}
 def crawl(driver):
     print('job start at', datetime.now())
     url = 'https://mops.twse.com.tw/mops/web/t05sr01_1'
@@ -37,11 +42,9 @@ def crawl(driver):
     # excecute newEvenrs
     newData = {}
     baseWindow = driver.window_handles[0]
-    count=0
+   
     for key, script in newEvenrs.items():
-        count+=1
-        if(count==8):
-            break
+        
         script = script.replace('openWindow','openWindowAction').replace('this.form', 'document.fm_t05sr01_1') # magic method
         #print(script)
         driver.execute_script(script)
@@ -65,31 +68,31 @@ def crawl(driver):
         }
         driver.close()
         driver.switch_to.window(baseWindow)
-        # ####判斷字詞發送notify
-        # for word in underlinelist:
-        #     if word in key:
-        #         message=''
-        #         underline="【"+word+"】"
-        #         cmpnynum="("+key[0:4]+")"
-        #         count=0
-        #         cmpnyname=''
-        #         announcement=''
-        #         for i in range(0,len(key)):
-        #             if key[i] ==' ' and count!=4:
-        #                 count+=1
-        #             if count==1:
-        #                 cmpnyname+=key[i]    
-        #             elif count == 4:
-        #                 announcement+=key[i]
-        #         message=underline+"\n"+cmpnynum+cmpnyname+"-重大消息"+"\n"+announcement
-        #         #image = open('./screen.png', 'rb')
-        #         image = io.BytesIO(newData[key]['png'])
-        #         imageFile = {'imageFile' :image}   # 設定圖片資訊
-        #         data = {
-        #         'message':message ,     # 設定 LINE Notify message ( 不可少 )
-        #         }
-        #         data = requests.post(urlline, headers=headers, data=data, files=imageFile)   # 發送 LINE Notify
-        #         break
+        ####判斷字詞發送notify
+        for word in underlinelist:
+            if word in key:
+                message=''
+                underline="【"+word+"】"
+                cmpnynum="("+key[0:4]+")"
+                count=0
+                cmpnyname=''
+                announcement=''
+                for i in range(0,len(key)):
+                    if key[i] ==' ' and count!=4:
+                        count+=1
+                    if count==1:
+                        cmpnyname+=key[i]    
+                    elif count == 4:
+                        announcement+=key[i]
+                message=underline+"\n"+cmpnynum+cmpnyname+"-重大消息"+"\n"+announcement
+                image = open('./screen.png', 'rb')
+                # image = io.BytesIO(newData[key]['png'])
+                imageFile = {'imageFile' :image}   # 設定圖片資訊
+                data = {
+                'message':message ,     # 設定 LINE Notify message ( 不可少 )
+                }
+                data = requests.post(urlline, headers=headers, data=data, files=imageFile)   # 發送 LINE Notify
+                break
     print('job end at', datetime.now())
     return newData
     

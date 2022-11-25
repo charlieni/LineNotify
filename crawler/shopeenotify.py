@@ -4,7 +4,7 @@ import requests
 import  io 
 
 url = 'https://notify-api.line.me/api/notify'
-token = 'TR7hKxoPx6QmBWawSxMmkwqE41oHROYWQvEfclEwwRq'   ###授權碼
+token = 'l2ixxn1wear77gmLwK8WLKWQZrph1ySNoaCkGcG0jQd'   ###授權碼
 headers = {
     'Authorization': 'Bearer ' + token    # 設定 LINE Notify 權杖
 }

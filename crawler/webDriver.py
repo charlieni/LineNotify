@@ -5,7 +5,7 @@ class ChromeDriver(object):
     def __init__(self):
 #        self.cdm = ChromeDriverManager().install()
         self.options = Options()
-       # self.options.add_argument('--headless')
+        self.options.add_argument('--headless')
         self.options.add_argument('--no-sandbox')
         self.driver = webdriver.Chrome( options=self.options)
 

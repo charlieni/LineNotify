@@ -7,7 +7,7 @@ from shopeenotify import job
 if __name__ == '__main__':
     scheduler = BlockingScheduler()
     driver = ChromeDriver().driver
-    scheduler.add_job(job, 'interval', args=[], seconds=10)
+    scheduler.add_job(crawl, 'interval', args=[driver], seconds=120)
     scheduler.start()
 
    
