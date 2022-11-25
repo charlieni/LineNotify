@@ -50,11 +50,11 @@ def crawl(driver):
         # set window to fit table
         try:
             bottom = driver.find_element(By.XPATH, '/html/body/table[3]/tbody/tr/td/b')
-            driver.set_window_size(driver.get_window_size[0], bottom.location)
+            driver.set_window_size(driver.get_window_size()['width'], bottom.location['y'])
         except:
             pass
         # save newData
-        driver.get_screenshot_as_file('./screen.png')
+        driver.save_screenshot(f'./screen.png')
         newData[key] = {
             'png': open('./screen.png', 'rb'),
             'source': driver.page_source,
