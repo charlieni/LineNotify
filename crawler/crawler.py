@@ -50,7 +50,10 @@ def crawl(driver):
         # set window to fit table
         try:
             bottom = driver.find_element(By.XPATH, '/html/body/table[3]/tbody/tr/td/b')
-            driver.set_window_size(driver.get_window_size()['width'], bottom.location['y'])
+            bottomLocation = bottom.location['y']
+            if bottomLocation < 800:
+                bottomLocation = 800
+            driver.set_window_size(driver.get_window_size()['width'], bottomLocation)
         except:
             pass
         # save newData
